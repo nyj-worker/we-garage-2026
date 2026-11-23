@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리동네 화물주차장 조성현황 | 스마트 화물팀 대시보드</title>
+  <meta name="description" content="남양주시 스마트화물팀 우리동네 화물주차장 조성 현황 및 입지 검토 현황 통합 대시보드">
+  
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Google Navigation Bar -->
+    <header class="google-nav">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <i class="fa-solid fa-truck-ramp-box"></i>
+        </div>
+        <div class="brand-title">
+          <h1>우리동네 화물주차장 조성현황</h1>
+          <p>남양주시 스마트화물팀 • 2026.07.02. 기준</p>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-section">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="위치, 지번, 연번, 상태, 주차대수로 검색...">
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="header-actions">
+        <a href="https://garage-gules-phi.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-map-header" title="우리동네 화물주차장 지도 이동">
+          <i class="fa-solid fa-map-location-dot"></i> 우리동네 화물주차장 지도 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+        <a href="https://gris.gg.go.kr/ost/oneStopView.do" target="_blank" rel="noopener noreferrer" class="btn-portal-header" title="경기도부동산포털 이동">
+          <i class="fa-solid fa-earth-asia"></i> 경기도부동산포털 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+
+      <!-- Summary Metrics Overview Widget (5 Cards) -->
+      <section class="summary-widget" aria-label="화물주차장 전체 통계">
+        <!-- 1. 총 조성 개소 -->
+        <div class="summary-card">
+          <div class="summary-icon icon-blue">
+            <i class="fa-solid fa-square-parking"></i>
+          </div>
+          <div class="summary-info">
+            <span class="label">총 조성 개소</span>
+            <div class="value" id="metricCount">7개소</div>
+            <span class="sub-value">화도읍 4 / 진접읍 3</span>
+          </div>
+        </div>
+
+        <!-- 2. 검토중 (사용자 지정 위치) -->
+        <div class="summary-card summary-card-review">
+          <div class="summary-icon icon-orange">
+            <i class="fa-solid fa-hourglass-half"></i>
+          </div>
+          <div class="summary-info">
+            <span class="label">검토중 개소</span>
+            <div class="value text-orange" id="metricReviewCount">1개소</div>
+            <span class="sub-value">오남읍 1 (입지 검토)</span>
+          </div>
+        </div>
+
+        <!-- 3. 총 조성 면적 -->
+        <div class="summary-card">
+          <div class="summary-icon icon-green">
+            <i class="fa-solid fa-chart-area"></i>
+          </div>
+          <div class="summary-info">
+            <span class="label">총 조성 면적</span>
+            <div class="value" id="metricArea">21,969 ㎡</div>
+            <span class="sub-value" id="metricPyeong">약 6,645 평</span>
+          </div>
+        </div>
+
+        <!-- 4. 총 주차 대수 -->
+        <div class="summary-card">
+          <div class="summary-icon icon-yellow">
+            <i class="fa-solid fa-truck-front"></i>
+          </div>
+          <div class="summary-info">
+            <span class="label">총 주차 대수</span>
+            <div class="value" id="metricCapacity">233 면</div>
+            <span class="sub-value">화물차 전용 주차구획</span>
+          </div>
+        </div>
+
+        <!-- 5. 부지 구분 -->
+        <div class="summary-card">
+          <div class="summary-icon icon-purple">
+            <i class="fa-solid fa-building-user"></i>
+          </div>
+          <div class="summary-info">
+            <span class="label">부지 구분</span>
+            <div class="value">사유지 100%</div>
+            <span class="sub-value">민관 협력 조성 방식</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter & Sort Controls Toolbar -->
+      <section class="toolbar">
+        <div class="chip-group" id="chipGroup">
+          <button class="chip active" data-filter="all">
+            <i class="fa-solid fa-border-all"></i> 전체 보기 (8)
+          </button>
+          <button class="chip" data-filter="status-completed">
+            <i class="fa-solid fa-circle-check text-green"></i> 조성완료 (7)
+          </button>
+          <button class="chip" data-filter="status-review">
+            <i class="fa-solid fa-hourglass-half text-orange"></i> 검토중 (1)
+          </button>
+          <button class="chip" data-filter="region-화도읍">
+            <i class="fa-solid fa-location-dot"></i> 화도읍 (4)
+          </button>
+          <button class="chip" data-filter="region-진접읍">
+            <i class="fa-solid fa-location-dot"></i> 진접읍 (3)
+          </button>
+          <button class="chip" data-filter="region-오남읍">
+            <i class="fa-solid fa-location-dot"></i> 오남읍 (1)
+          </button>
+        </div>
+
+        <!-- Toolbar Right Controls: Sort & View Toggle -->
+        <div class="toolbar-right">
+          <div class="sort-box">
+            <i class="fa-solid fa-arrow-down-short-wide sort-icon"></i>
+            <select id="sortSelect" class="sort-select" title="지정일자 및 연번 정렬">
+              <option value="default">연번순 (기본)</option>
+              <option value="date-asc">지정일자 오름차순 (오래된 순)</option>
+              <option value="date-desc">지정일자 내림차순 (최신 순)</option>
+              <option value="area-desc">면적 큰 순</option>
+              <option value="capacity-desc">주차대수 많은 순</option>
+            </select>
+          </div>
+
+          <div class="view-toggle">
+            <button class="toggle-btn active" id="toggleGrid">
+              <i class="fa-solid fa-grip"></i> 카드 보드
+            </button>
+            <button class="toggle-btn" id="toggleTable">
+              <i class="fa-solid fa-list"></i> 목록 표
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards Board Container -->
+      <section id="cardGrid" class="card-board-grid" aria-label="주차장 카드 목록">
+        <!-- Dynamic Cards rendered via JS -->
+      </section>
+
+      <!-- Smart Table Container (Hidden by default) -->
+      <section id="tableContainer" hidden aria-label="주차장 목록 표">
+        <!-- Dynamic Table rendered via JS -->
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="google-footer">
+      <p>© 남양주시 교통국 스마트화물팀 • 우리동네 화물주차장 조성현황 통합 관리 시스템</p>
+    </footer>
+  </div>
+
+  <!-- Lightbox Image Zoom Modal -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" title="닫기">&times;</button>
+      <img alt="확대 이미지" class="lightbox-img" id="lightboxImg">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-check-circle text-green"></i>
+    <span id="toastMsg">알림 메시지</span>
+  </div>
+
+  <!-- App Data & Scripts -->
+  <script src="./js/parking-data.js" defer></script>
+  <script src="./js/app.js" defer></script>
+</body>
+</html>
